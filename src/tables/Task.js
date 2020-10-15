@@ -1,5 +1,6 @@
 import React from 'react'
 import { Draggable } from "react-beautiful-dnd";
+import TerminateButton from '../TerminateButton';
 
 const Task = props => (
 
@@ -18,6 +19,10 @@ const Task = props => (
                 <td>{props.task.name}</td>
                 <td>{props.task.time+ ' min'}</td>
                 <td>
+
+                  <TerminateButton index={props.index} completed={props.task.completed} terminateTask={props.terminateTask}/>
+
+
                   <button
                     onClick={() => {
                       props.editRow(props.task)

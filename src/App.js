@@ -93,7 +93,7 @@ const App = () => {
 				<div className="flex-large">
 					<h2>View tasks</h2>
 					<DragDropContext onDragEnd={handleonDragEnd}>
-						<TaskTable tasks={tasks} editRow={editRow} deleteTask={deleteTask} />
+						<TaskTable tasks={tasks} editRow={editRow} deleteTask={deleteTask}  terminateTask={terminateTask} />
 					</DragDropContext>
 				</div>
 			</div>
