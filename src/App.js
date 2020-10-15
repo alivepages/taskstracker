@@ -2,6 +2,7 @@ import React, { useState, Fragment } from 'react'
 import AddTaskForm from './forms/AddTaskForm'
 import EditTaskForm from './forms/EditTaskForm'
 import TaskTable from './tables/TaskTable'
+import { DragDropContext } from "react-beautiful-dnd";
 
 const App = () => {
 	// Data
@@ -41,6 +42,21 @@ const App = () => {
 
 		setCurrentTask({ id: task.id, name: task.name, time: task.time })
 	}
+
+	const handleonDragEnd = (result) => {
+		if (!result.destination) {
+		  return
+		}
+		const content = reorder(tasks, result.source.index,   result.destination.index)
+		setTasks(content);
+	  }
+  
+	  const reorder = (list, startIndex, endIndex) => {
+		  const result = Array.from(list);
+		  const [removed] = result.splice(startIndex, 1);
+		  result.splice(endIndex, 0, removed);
+		  return result;
+	 };
 
 	return (
 		<div className="container">
