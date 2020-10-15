@@ -5,7 +5,7 @@ const TaskTable = props => (
     <thead>
       <tr>
         <th>Name</th>
-        <th>Taskname</th>
+        <th>Time</th>
         <th>Actions</th>
       </tr>
     </thead>

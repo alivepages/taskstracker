@@ -6,9 +6,9 @@ import TaskTable from './tables/TaskTable'
 const App = () => {
 	// Data
 	const tasksData = [
-		{ id: 1, name: 'Tania', time: 'floppydiskette' },
-		{ id: 2, name: 'Craig', time: 'siliconeidolon' },
-		{ id: 3, name: 'Ben', time: 'benisphere' },
+		{ id: 1, name: 'Design', time: 10 },
+		{ id: 2, name: 'Front End', time: 45 },
+		{ id: 3, name: 'Back End', time: 60 },
 	]
 
 	const initialFormState = { id: null, name: '', time: '' }
@@ -44,7 +44,7 @@ const App = () => {
 
 	return (
 		<div className="container">
-			<h1>CRUD App with Hooks</h1>
+			<h1>Tasks Tracker</h1>
 			<div className="flex-row">
 				<div className="flex-large">
 					{editing ? (
