@@ -8,9 +8,9 @@ import MyTimer from './MyTimer.js';
 const App = () => {
 	// Data
 	const tasksData = [
-		{ id: 1, name: 'Design', time: 10 },
-		{ id: 2, name: 'Front End', time: 45 },
-		{ id: 3, name: 'Back End', time: 60 },
+		{ id: 1, name: 'Design', time: 1, completed : false },
+		{ id: 2, name: 'Front End', time: 45, completed : false  },
+		{ id: 3, name: 'Back End', time: 60, completed : false },
 	]
 
 	const initialFormState = { id: null, name: '', time: '' }
