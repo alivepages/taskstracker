@@ -4,6 +4,10 @@ import EditTaskForm from './forms/EditTaskForm'
 import TaskTable from './tables/TaskTable'
 import { DragDropContext } from "react-beautiful-dnd";
 import MyTimer from './MyTimer.js';
+import ReactModal from "react-modal";
+import { useModal } from "react-modal-hook";
+import { Button, Dialog, DialogActions, DialogTitle } from "@material-ui/core";
+import Completed from './Completed'
 
 const App = () => {
 	// Data
@@ -68,8 +72,22 @@ const App = () => {
 		  return result;
 	 };
 
+	 const [showModal, hideModal] = useModal(
+		() => (
+		  <ReactModal isOpen>
+			<Button style={{float:'right'}} onClick={hideModal}>Close</Button>
+			<p>Completed Task</p>
+			<Completed tasks={tasks}/>
+		  </ReactModal>
+		),
+	  );
+ 
+
 	return (
 		<div className="container">
+
+    	<button onClick={showModal}> Completed tasks</button>
+
 			<h1>Tasks Tracker</h1>
 			<div className="flex-row">
 				<div className="flex-large">
