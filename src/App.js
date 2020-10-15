@@ -3,6 +3,7 @@ import AddTaskForm from './forms/AddTaskForm'
 import EditTaskForm from './forms/EditTaskForm'
 import TaskTable from './tables/TaskTable'
 import { DragDropContext } from "react-beautiful-dnd";
+import MyTimer from './MyTimer.js';
 
 const App = () => {
 	// Data
@@ -35,6 +36,15 @@ const App = () => {
 		setEditing(false)
 
 		setTasks(tasks.map(task => (task.id === id ? updatedTask : task)))
+	}
+
+	const terminateTask = (index) => {
+
+		//setTasks(tasks.map(task => (task.id === id ? {id:task.id, name:task.name, completed:true} : task)))
+
+		tasks[index].completed=true;
+		console.log(tasks)
+		setTasks(tasks);
 	}
 
 	const editRow = task => {
@@ -87,7 +97,13 @@ const App = () => {
 					</DragDropContext>
 				</div>
 			</div>
+			<div className="flex-row">
+			<div className="flex-large" style={{marginBottom:'100px'}}>
+				<MyTimer expiryTimestamp={null} tasks={tasks} terminateTask={terminateTask}/>
+			</div>
 		</div>
+		</div>
+
 	)
 }
 
