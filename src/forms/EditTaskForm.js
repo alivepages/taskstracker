@@ -4,6 +4,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 const EditTaskForm = props => {
   const [ task, setTask ] = useState(props.currentTask)
+	const [ mins, setMin ] = useState()
+	const [ segs, setSegs ] = useState()
 
   const [time, setTime] = React.useState();
 	const [open, setOpen] = React.useState(false);
@@ -19,9 +21,18 @@ const EditTaskForm = props => {
 
   const handleInputChange = event => {
     const { name, value } = event.target
-
     setTask({ ...task, [name]: value })
   }
+
+	const handleInputMinsChange = event => {		
+		const { name, value } = event.target
+		setMin( value )		
+	}
+
+	const handleInputSegsChange = event => {		
+		const { name, value } = event.target
+		setSegs( value )		
+	}
 
   const handleChange = (event) => {
 		setTime(event.target.value);
@@ -40,7 +51,9 @@ const EditTaskForm = props => {
     <form
       onSubmit={event => {
         event.preventDefault()
-
+        if (!task.name || !task.time) return
+		if (task.time == -1) task.time = parseInt(mins) + parseInt(segs)/60
+        if (task.time<=0 || task.time>120) return;
         props.updateTask(task.id, task)
       }}
     >
@@ -63,7 +76,14 @@ const EditTaskForm = props => {
 			<MenuItem value={10}>corto</MenuItem>
 			<MenuItem value={45}>medio</MenuItem>
 			<MenuItem value={60}>largo</MenuItem>
+			<MenuItem value={-1}>Other</MenuItem>
 		</Select>
+		{task.time == -1 ?
+		(<span>
+		<input type="text" name="mins" placeholder="Mins"  onChange={handleInputMinsChange} value={mins} style={{width: '70px', display: 'inline'}} />
+		<input type="text" name="segs" placeholder="Segs"  onChange={handleInputSegsChange} value={segs} style={{width: '70px', display: 'inline'}} />
+		</span>
+		):null}
 
       <button>Update task</button>
       <button onClick={() => props.setEditing(false)} className="button muted-button">
