@@ -4,9 +4,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 
 
-const AddUserForm = props => {
-	const initialFormState = { id: null, name: '', username: '' }
-	const [ user, setUser ] = useState(initialFormState)
+const AddTaskForm = props => {
+	const initialFormState = { id: null, name: '', taskname: '' }
+	const [ task, setTask ] = useState(initialFormState)
 
 	const [time, setTime] = React.useState();
 	const [open, setOpen] = React.useState(false);
@@ -14,7 +14,7 @@ const AddUserForm = props => {
 	const handleInputChange = event => {
 		const { name, value } = event.target
 
-		setUser({ ...user, [name]: value })
+		setTask({ ...task, [name]: value })
 	}
 
 	const handleChange = (event) => {
@@ -34,15 +34,15 @@ const AddUserForm = props => {
 		<form
 			onSubmit={event => {
 				event.preventDefault()
-				if (!user.name || !user.username) return
+				if (!task.name || !task.taskname) return
 
-				props.addUser(user)
-				setUser(initialFormState)
+				props.addTask(task)
+				setTask(initialFormState)
 			}}
 		>
 			<label>Name</label>
-			<input type="text" name="name" value={user.name} onChange={handleInputChange} />
-			<label>Username</label>
+			<input type="text" name="name" value={task.name} onChange={handleInputChange} />
+			<label>Taskname</label>
 
 			<Select
 		labelId="demo-controlled-open-select-label"
@@ -53,8 +53,8 @@ const AddUserForm = props => {
 			value={time || 0}
 			onChange={handleInputChange}
 			placeholder="menu"
-			name="username"
-			value={user.username}
+			name="taskname"
+			value={task.taskname}
 		>
 			<MenuItem value={0}>Duración</MenuItem>
 			<MenuItem value={10}>corto</MenuItem>
@@ -63,9 +63,9 @@ const AddUserForm = props => {
 		</Select>
 
 			
-			<button>Add new user</button>
+			<button>Add new task</button>
 		</form>
 	)
 }
 
-export default AddUserForm
+export default AddTaskForm
