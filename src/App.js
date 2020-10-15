@@ -8,6 +8,7 @@ import ReactModal from "react-modal";
 import { useModal } from "react-modal-hook";
 import { Button, Dialog, DialogActions, DialogTitle } from "@material-ui/core";
 import Completed from './Completed'
+import Pending from './Pending'
 
 const App = () => {
 	// Data
@@ -81,12 +82,23 @@ const App = () => {
 		  </ReactModal>
 		),
 	  );
+
+	  const [showModal2, hideModal2] = useModal(
+		() => (
+		  <ReactModal isOpen>
+			<Button style={{float:'right'}} onClick={hideModal2}>Close</Button>
+			<p>Panding Task</p>
+			<Pending tasks={tasks}/>
+		  </ReactModal>
+		),
+	  );
  
 
 	return (
 		<div className="container">
 
     	<button onClick={showModal}> Completed tasks</button>
+		<button onClick={showModal2}> Pending</button>
 
 			<h1>Tasks Tracker</h1>
 			<div className="flex-row">
