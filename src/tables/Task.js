@@ -16,7 +16,7 @@ const Task = props => (
                   {...provided.dragHandleProps}
               >
                 <td>{props.task.name}</td>
-                <td>{props.task.time}</td>
+                <td>{props.task.time+ ' min'}</td>
                 <td>
                   <button
                     onClick={() => {
