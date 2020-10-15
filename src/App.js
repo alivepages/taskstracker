@@ -6,12 +6,12 @@ import TaskTable from './tables/TaskTable'
 const App = () => {
 	// Data
 	const tasksData = [
-		{ id: 1, name: 'Tania', taskname: 'floppydiskette' },
-		{ id: 2, name: 'Craig', taskname: 'siliconeidolon' },
-		{ id: 3, name: 'Ben', taskname: 'benisphere' },
+		{ id: 1, name: 'Tania', time: 'floppydiskette' },
+		{ id: 2, name: 'Craig', time: 'siliconeidolon' },
+		{ id: 3, name: 'Ben', time: 'benisphere' },
 	]
 
-	const initialFormState = { id: null, name: '', taskname: '' }
+	const initialFormState = { id: null, name: '', time: '' }
 
 	// Setting state
 	const [ tasks, setTasks ] = useState(tasksData)
@@ -39,7 +39,7 @@ const App = () => {
 	const editRow = task => {
 		setEditing(true)
 
-		setCurrentTask({ id: task.id, name: task.name, taskname: task.taskname })
+		setCurrentTask({ id: task.id, name: task.name, time: task.time })
 	}
 
 	return (

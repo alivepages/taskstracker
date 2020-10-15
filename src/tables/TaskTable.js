@@ -14,7 +14,7 @@ const TaskTable = props => (
         props.tasks.map(task => (
           <tr key={task.id}>
             <td>{task.name}</td>
-            <td>{task.taskname}</td>
+            <td>{task.time}</td>
             <td>
               <button
                 onClick={() => {
