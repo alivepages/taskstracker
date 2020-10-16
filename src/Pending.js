@@ -1,7 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Task from './tables/Task'
+import useModal from './useModal';
 
-const Pending = props => (
+
+const Pending = (props) => {
+
+  const [ corto, setCorto ] = useState()
+const [ medio, setMedio ] = useState()
+const [ largo, setLargo ] = useState()
+
+return (
+  <div>
+    <button onClick={corto}> Corto</button>
+    <button onClick={medio}> Medio</button>
+    <button onClick={largo}> Largo</button>
   <table>
     <thead>
       <tr>
@@ -11,7 +23,9 @@ const Pending = props => (
     </thead>
          <tbody>
           {props.tasks.filter(task => !task.completed).length > 0 ? (
-			props.tasks.filter(task => !task.completed)
+      props.tasks.filter(task => 
+        !task.completed
+        )
 			.map((task, index) => (
 				<tr>
 					<td>{task.name}</td>
@@ -25,6 +39,8 @@ const Pending = props => (
           )}
         </tbody>
   </table>
+  </div>
 )
+}
 
 export default Pending

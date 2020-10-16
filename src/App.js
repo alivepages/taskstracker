@@ -11,17 +11,12 @@ import useModal from './useModal';
 import './App.css';
 
 const App = () => {
-	// Data
-	const tasksData = [
-		{ id: 1, name: 'Design', time: 1, completed : true, dateInit : new Date(), dateEnd : new Date() },
-		{ id: 2, name: 'Front End', time: 45, completed : false, dateInit : null, dateEnd : null  },
-		{ id: 3, name: 'Back End', time: 60, completed : false, dateInit : null, dateEnd : null },
-	]
+
 
 	const initialFormState = { id: null, name: '', time: '' }
 
 	// Setting state
-	const [ tasks, setTasks ] = useState(tasksData)
+	const [ tasks, setTasks ] = useState([])
 	const [ currentTask, setCurrentTask ] = useState(initialFormState)
 	const [ editing, setEditing ] = useState(false)
 	const [ refresh, setRefresh ] = useState(false)
