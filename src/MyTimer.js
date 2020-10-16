@@ -73,7 +73,7 @@ function MyTimer({ expiryTimestamp, tasks, terminateTask }) {
         time.setSeconds(current() ? time.getSeconds() + current().time * 60: null);
         setCopy(current());
         restart(time)
-        current().dateInit = new Date();;
+        current().dateInit = new Date();
         current().dateEnd = null;
       }}>Restart</button>
     </div>

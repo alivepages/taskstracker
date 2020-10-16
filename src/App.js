@@ -4,16 +4,14 @@ import EditTaskForm from './forms/EditTaskForm'
 import TaskTable from './tables/TaskTable'
 import { DragDropContext } from "react-beautiful-dnd";
 import MyTimer from './MyTimer.js';
-import ReactModal from "react-modal";
-import { useModal } from "react-modal-hook";
-import { Button, Dialog, DialogActions, DialogTitle } from "@material-ui/core";
-import Completed from './Completed'
-import Pending from './Pending'
+import Modal from "./Modal";
+import useModal from './useModal';
+import './App.css';
 
 const App = () => {
 	// Data
 	const tasksData = [
-		{ id: 1, name: 'Design', time: 1, completed : false, dateInit : null, dateEnd : null },
+		{ id: 1, name: 'Design', time: 1, completed : true, dateInit : new Date(), dateEnd : new Date() },
 		{ id: 2, name: 'Front End', time: 45, completed : false, dateInit : null, dateEnd : null  },
 		{ id: 3, name: 'Back End', time: 60, completed : false, dateInit : null, dateEnd : null },
 	]
@@ -25,6 +23,29 @@ const App = () => {
 	const [ currentTask, setCurrentTask ] = useState(initialFormState)
 	const [ editing, setEditing ] = useState(false)
 	const [ refresh, setRefresh ] = useState(false)
+	const {isShowing, toggle} = useModal();
+	const [ dataGraph, setDataGraph ] = useState();
+
+
+	const randomData = () => { // (start, end) => {
+		var curr = new Date; // get current date
+		var first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
+		var last = first + 6; // last day is the first day + 6
+		
+		var start = new Date(curr.setDate(first));
+		var end = new Date(curr.setDate(last));
+
+		var data = [];
+		for (var i = 1; i <= 50; i++) {
+			data.push({id: i, name: 'Task '+ i, completed: true, 
+			time: Math.random()*60, 
+			dateInit: new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())),
+			dateEnd: new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())),
+		});
+		};
+		setTasks(data);
+	}
+	
 
 	// CRUD operations
 	const addTask = task => {
@@ -45,9 +66,6 @@ const App = () => {
 	}
 
 	const terminateTask = (index) => {
-
-		//setTasks(tasks.map(task => (task.id === id ? {id:task.id, name:task.name, completed:true} : task)))
-
 		tasks[index].completed = true;
 		tasks[index].dateEnd = new Date();
 		if (!tasks[index].dateInit) {
@@ -60,7 +78,6 @@ const App = () => {
 
 	const editRow = task => {
 		setEditing(true)
-
 		setCurrentTask({ id: task.id, name: task.name, time: task.time })
 	}
 
@@ -79,44 +96,74 @@ const App = () => {
 		  return result;
 	 };
 
-	 const [showModal, hideModal] = useModal(
-		() => (
-		  <ReactModal isOpen>
-			<Button style={{float:'right'}} onClick={hideModal}>Close</Button>
-			<p>Completed Task</p>
-			<Completed tasks={tasks}/>
-		  </ReactModal>
-		),
-	  );
 
-	  const [showModal2, hideModal2] = useModal(
-		() => (
-		  <ReactModal isOpen>
-			<Button style={{float:'right'}} onClick={hideModal2}>Close</Button>
-			<p>Panding Task</p>
-			<Pending tasks={tasks}/>
-		  </ReactModal>
-		),
-	  );
 
-	  const [showModal3, hideModal3] = useModal(
-		() => (
-		  <ReactModal isOpen>
-			<Button style={{float:'right'}} onClick={hideModal3}>Close</Button>
-			<p>History chart</p>
-			
-		  </ReactModal>
-		),
-	  );
- 
+	  const getSem = (n) => {
+		var day = '';
+		switch (n) {
+			  case 0:
+				day = "Sunday";
+				break;
+			  case 1:
+				day = "Monday";
+				break;
+			  case 2:
+				 day = "Tuesday";
+				break;
+			  case 3:
+				day = "Wednesday";
+				break;
+			  case 4:
+				day = "Thursday";
+				break;
+			  case 5:
+				day = "Friday";
+				break;
+			  case 6:
+				day = "Saturday";
+	  }
+	  return day;
+	}
+
+	  const graphic = () => {
+		var curr = new Date; // get current date
+		var first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
+		var last = first + 6; // last day is the first day + 6
+		
+		var weekStart = new Date(curr.setDate(first));
+		var weekEnd = new Date(curr.setDate(last));
+		var taskWeek = tasks.filter((task) => (	
+			 task.completed && task.dateEnd && task.dateEnd.getDate() >= weekStart.getDate()
+		));
+
+		var dataWeek = [];
+		for (var i = 0;i < 7; i++) dataWeek[i] = 0;
+		taskWeek.map((task, index) => (
+			dataWeek[task.dateEnd.getDay()]+=task.time
+		));
+		  
+		setDataGraph(dataWeek)
+		toggle();
+		
+	  }
+
+
+
 
 	return (
-		<div className="container">
+		<div>
 
-    	<button onClick={showModal}> Completed tasks</button>
-		<button onClick={showModal2}> Pending</button>
-		<button onClick={showModal3}> History chart</button>
-		<button> Fill data</button>
+		<Modal
+			isShowing={isShowing}
+			hide={toggle}
+			dataGraph={dataGraph}
+		/>
+		
+		<div className="container">
+    	<button onClick={toggle}> Completed tasks</button>
+		<button onClick={toggle}> Pending</button>
+		<button onClick={graphic}> History chart</button>
+		<button onClick={randomData}> Fill data</button>
 
 			<h1>Tasks Tracker</h1>
 			<div className="flex-row">
@@ -151,7 +198,7 @@ const App = () => {
 			</div>
 		</div>
 		</div>
-
+		</div>
 	)
 }
 
