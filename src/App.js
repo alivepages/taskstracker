@@ -13,9 +13,9 @@ import Pending from './Pending'
 const App = () => {
 	// Data
 	const tasksData = [
-		{ id: 1, name: 'Design', time: 1, completed : false },
-		{ id: 2, name: 'Front End', time: 45, completed : false  },
-		{ id: 3, name: 'Back End', time: 60, completed : false },
+		{ id: 1, name: 'Design', time: 1, completed : false, dateInit : null, dateEnd : null },
+		{ id: 2, name: 'Front End', time: 45, completed : false, dateInit : null, dateEnd : null  },
+		{ id: 3, name: 'Back End', time: 60, completed : false, dateInit : null, dateEnd : null },
 	]
 
 	const initialFormState = { id: null, name: '', time: '' }
@@ -47,7 +47,11 @@ const App = () => {
 
 		//setTasks(tasks.map(task => (task.id === id ? {id:task.id, name:task.name, completed:true} : task)))
 
-		tasks[index].completed=true;
+		tasks[index].completed = true;
+		tasks[index].dateEnd = new Date();
+		if (!tasks[index].dateInit) {
+			tasks[index].dateInit = tasks[index].dateEnd
+		}
 		console.log(tasks)
 		setTasks(tasks);
 	}
@@ -92,6 +96,16 @@ const App = () => {
 		  </ReactModal>
 		),
 	  );
+
+	  const [showModal3, hideModal3] = useModal(
+		() => (
+		  <ReactModal isOpen>
+			<Button style={{float:'right'}} onClick={hideModal3}>Close</Button>
+			<p>History chart</p>
+			
+		  </ReactModal>
+		),
+	  );
  
 
 	return (
@@ -99,6 +113,8 @@ const App = () => {
 
     	<button onClick={showModal}> Completed tasks</button>
 		<button onClick={showModal2}> Pending</button>
+		<button onClick={showModal3}> History chart</button>
+		<button> Fill data</button>
 
 			<h1>Tasks Tracker</h1>
 			<div className="flex-row">
