@@ -7,6 +7,7 @@ const Completed = props => (
       <tr>
         <th>Name</th>
         <th>Time</th>
+        <th>Date</th>
       </tr>
     </thead>
          <tbody>
@@ -16,6 +17,7 @@ const Completed = props => (
 				<tr>
 					<td>{task.name}</td>
 					<td>{task.time+ ' min'}</td>
+          <td>{task.dateEnd.toString()}</td>
 				</tr>
             ))
           ) : (

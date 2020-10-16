@@ -5,6 +5,8 @@ import TaskTable from './tables/TaskTable'
 import { DragDropContext } from "react-beautiful-dnd";
 import MyTimer from './MyTimer.js';
 import Modal from "./Modal";
+import ModalCompleted from "./ModalCompleted";
+import ModalPending from "./ModalPending";
 import useModal from './useModal';
 import './App.css';
 
@@ -23,11 +25,12 @@ const App = () => {
 	const [ currentTask, setCurrentTask ] = useState(initialFormState)
 	const [ editing, setEditing ] = useState(false)
 	const [ refresh, setRefresh ] = useState(false)
-	const {isShowing, toggle} = useModal();
+	const { isShowing, toggle} = useModal();
+	const [ typeModal, setTypeModal] = useState();
 	const [ dataGraph, setDataGraph ] = useState();
 
 
-	const randomData = () => { // (start, end) => {
+	const randomData = () => { 
 		var curr = new Date; // get current date
 		var first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
 		var last = first + 6; // last day is the first day + 6
@@ -71,7 +74,6 @@ const App = () => {
 		if (!tasks[index].dateInit) {
 			tasks[index].dateInit = tasks[index].dateEnd
 		}
-		console.log(tasks)
 		setTasks(tasks);
 		setRefresh(!refresh);
 	}
@@ -125,6 +127,16 @@ const App = () => {
 	  return day;
 	}
 
+	const showPending = () => {
+		setTypeModal(1);
+		toggle();
+	}
+
+	const showCompleted = () => {
+		setTypeModal(2);
+		toggle();
+	}
+
 	  const graphic = () => {
 		var curr = new Date; // get current date
 		var first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
@@ -143,6 +155,7 @@ const App = () => {
 		));
 		  
 		setDataGraph(dataWeek)
+		setTypeModal(3);
 		toggle();
 		
 	  }
@@ -154,14 +167,24 @@ const App = () => {
 		<div>
 
 		<Modal
-			isShowing={isShowing}
+			isShowing={typeModal==3 && isShowing}
 			hide={toggle}
 			dataGraph={dataGraph}
 		/>
+		<ModalCompleted
+			isShowing={typeModal==2 && isShowing}
+			hide={toggle}
+			tasks={tasks}
+		/>
+		<ModalPending
+			isShowing={typeModal==1 && isShowing}
+			hide={toggle}
+			tasks={tasks}
+		/>
 		
 		<div className="container">
-    	<button onClick={toggle}> Completed tasks</button>
-		<button onClick={toggle}> Pending</button>
+    	<button onClick={showCompleted}> Completed tasks</button>
+		<button onClick={showPending}> Pending</button>
 		<button onClick={graphic}> History chart</button>
 		<button onClick={randomData}> Fill data</button>
 
