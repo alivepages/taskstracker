@@ -22,7 +22,7 @@ const Task = props => (
 
                   <TerminateButton index={props.index} completed={props.task.completed} terminateTask={props.terminateTask}/>
 
-
+                  {!props.task.completed?
                   <button
                     onClick={() => {
                       props.editRow(props.task)
@@ -31,12 +31,15 @@ const Task = props => (
                   >
                     Edit
                   </button>
+                  : null}
+                  {!props.task.completed?
                   <button
                     onClick={() => props.deleteTask(props.task.id)}
                     className="button muted-button"
                   >
                     Delete
                   </button>
+                  : null}
                 </td>
               </tr>
               )}

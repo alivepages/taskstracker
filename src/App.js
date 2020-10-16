@@ -24,6 +24,7 @@ const App = () => {
 	const [ tasks, setTasks ] = useState(tasksData)
 	const [ currentTask, setCurrentTask ] = useState(initialFormState)
 	const [ editing, setEditing ] = useState(false)
+	const [ refresh, setRefresh ] = useState(false)
 
 	// CRUD operations
 	const addTask = task => {
@@ -54,6 +55,7 @@ const App = () => {
 		}
 		console.log(tasks)
 		setTasks(tasks);
+		setRefresh(!refresh);
 	}
 
 	const editRow = task => {
