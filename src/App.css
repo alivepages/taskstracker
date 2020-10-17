@@ -64,3 +64,9 @@ button {
   background: #247BA0;
   color: #fff;
 }
+
+.boxes {
+  display: flex;
+  width: 205px;
+  justify-content: space-between;
+}
