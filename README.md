@@ -1,12 +1,18 @@
-# React Hooks Tutorial
+# Tasks Tracker
 
-In this tutorial, we'll make a simple CRUD app that can add, update, or delete tasks.
 
-### [View the demo](https://taniarascia.github.io/react-hooks/) | [Read the tutorial](https://www.taniarascia.com/crud-app-in-react-with-hooks/)
+This project allows you to keep a record of tasks
+
+
+## Instalation
+
+git clonec...
+npm i
+npm start
 
 ## Author
 
-- [Tania Rascia](https://www.taniarascia.com)
+- [Joel Fagundo](https://www.alivepages.com)
 
 ## License
 
