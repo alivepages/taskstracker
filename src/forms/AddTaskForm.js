@@ -45,12 +45,12 @@ const AddTaskForm = props => {
 
 	return (
 		<form
-			onSubmit={event => {
+			onSubmit={event => { 
 				event.preventDefault()
 				if (!task.name || !task.time) return
 				console.log(mins,segs)
-				if (task.time == -1) task.time = parseInt(mins) + parseInt(segs)/60 
-				if (task.time<=0 || task.time>120) return;
+				if (task.time == -1) task.time = Math.round((parseInt(mins) + parseInt(segs? segs : 0)/60) *100) / 100
+				if (isNaN(task.time) || task.time<=0 || task.time>120) return;
 				props.addTask(task)
 				console.log(mins,segs,task)
 				setTask(initialFormState)
