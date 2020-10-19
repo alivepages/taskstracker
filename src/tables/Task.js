@@ -4,6 +4,7 @@ import TerminateButton from '../TerminateButton';
 
 const Task = props => (
 
+
         <Draggable draggableId={'item'+props.index} index={props.index}>
 
         {provided => (
@@ -20,7 +21,7 @@ const Task = props => (
                 <td>{props.task.time+ ' min'}</td>
                 <td>
 
-                  <TerminateButton index={props.index} completed={props.task.completed} terminateTask={props.terminateTask}/>
+                  <TerminateButton mins={props.task.mins} index={props.index} completed={props.task.completed} terminateTask={props.terminateTask}/>
 
                   {!props.task.completed?
                   <button

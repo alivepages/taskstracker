@@ -17,7 +17,7 @@ const TaskTable = props => (
           {props.tasks.length > 0 ? (
             props.tasks.map((task, index) => (
 
-              <Task task={task} index={index} editRow={props.editRow} deleteTask={props.deleteTask} terminateTask={props.terminateTask} />
+              <Task key={index} task={task} index={index} editRow={props.editRow} deleteTask={props.deleteTask} terminateTask={props.terminateTask} />
         
             ))
           ) : (

@@ -24,24 +24,52 @@ const App = () => {
 	const [ typeModal, setTypeModal] = useState();
 	const [ dataGraph, setDataGraph ] = useState();
 
+ 
+	const diffMins = (date1, date2) => {
+
+
+		var diffMs = (date2 - date1); // milliseconds between now & Christmas
+		var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
+		var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
+
+		return diffHrs * 60 + diffMins;
+	}
+
 
 	const randomData = () => { 
-		var curr = new Date; // get current date
-		var first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
-		var last = first + 6; // last day is the first day + 6
-		
-		var start = new Date(curr.setDate(first));
-		var end = new Date(curr.setDate(last));
-
 		var data = [];
 		for (var i = 1; i <= 50; i++) {
+			
+		var curr = new Date; // get current date
+		//var first = curr; // First day is the day of the month - the day of the week
+		//var last = first - Math.round(Math.random()*6); // last day is the first day + 6
+	
+		var type = Math.round(Math.random()*3);
+		var time = (type > 1)? ((type < 2)? 45 : 60) : 10;
+
+		var first = curr.getDate() - Math.round(Math.random()*6); // some random day of the week
+		var last =  ((time) * (1 -  Math.round(Math.random()*2)/10)); // minutes betwwen  80% and 100% of duratio
+
+
+		var minutes = time * (1 -  Math.round(Math.random()*20)/100); // betwwen  80% and 100%
+		//var end = (last == 60)? curr.setDate(first + 1): curr.setMinutes(minutes)
+
+		var start = new Date(curr.setDate(first));
+	
+		
+		var end = new Date( curr.setMinutes(curr.getMinutes() + last));
+
+			
 			data.push({id: i, name: 'Task '+ i, completed: true, 
-			time: Math.random()*60, 
-			dateInit: new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())),
-			dateEnd: new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())),
+			time: (type > 1)? ((type < 2)? 45 : 60) : 10,
+			dateInit: start,
+			dateEnd: end, 
+			mins : diffMins(start, end)
 		});
 		};
+		//console.log(data)
 		setTasks(data);
+		
 	}
 	
 
@@ -69,6 +97,7 @@ const App = () => {
 		if (!tasks[index].dateInit) {
 			tasks[index].dateInit = tasks[index].dateEnd
 		}
+		tasks[index].mins = diffMins(tasks[index].dateInit, tasks[index].dateEnd);
 		setTasks(tasks);
 		setRefresh(!refresh);
 	}

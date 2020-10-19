@@ -7,10 +7,10 @@ import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import AccessAlarmIcon from '@material-ui/icons/AccessAlarm';
 
-const TerminateButton = ({ index, completed, terminateTask }) => {
+const TerminateButton = ({ index, completed, terminateTask, mins }) => {
 
 if (completed) return (
-    <span>Terminada</span>
+    <span>Terminada en {mins} mins</span>
 )
 
 return (
