@@ -6,8 +6,8 @@ This project allows you to keep a record of tasks
 
 ## Instalation
 
-git clonec...
-npm i
+git clone... <br>
+npm i <br>
 npm start
 
 ## Author
